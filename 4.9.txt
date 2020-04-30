@@ -1,0 +1,59 @@
+sudo useradd solr
+sudo mkdir /usr/local/solr
+sudo chown solr:solr /usr/local/solr
+sudo su - solr
+cd /usr/local/solr
+
+From UpgradeFolder
+sudo cp solr-7.3.0.tgz /usr/local/solr
+sudo chown solr:solr /usr/local/solr/solr-7.3.0.tgz
+
+tar xvzf solr-7.3.0.tgz
+cd solr-7.3.0
+cp -r server/solr/configsets/_default server/solr/collection1
+
+From UpgradeFolder
+cp 4.9/dvinstall/schema.xml /usr/local/solr/solr-7.3.0/server/solr/collection1/conf
+sudo chown solr:solr /usr/local/solr/solr-7.3.0/server/solr/collection1/conf/schema.xml
+cp 4.9/dvinstall/solrconfig.xml /usr/local/solr/solr-7.3.0/server/solr/collection1/conf
+sudo chown solr:solr /usr/local/solr/solr-7.3.0/server/solr/collection1/conf/solrconfig.xml
+
+vim /usr/local/solr/solr-7.3.0/server/etc/jetty.xml
+<line 71 requestHeaderSize 102400>
+cd /usr/local/solr/solr-7.3.0
+bin/solr start
+bin/solr create_core -c collection1 -d server/solr/collection1/conf/
+
+From UpgradeFolder
+vim /etc/security/limits.conf
+<add line solr soft nproc 65000>
+sudo cp solr /etc/inti.d
+
+bin/solr stop
+
+From UpgradeFolder
+sudo service solar start
+chkconfig solr on
+
+
+GLassfish
+sudo service glassfish start
+/usr/local/glassfish4/bin/asadmin list-applications
+/usr/local/glassfish4/bin/asadmin undeploy dataverse-4.8.6
+sudo service glassfish stop
+sudo rm -rf /usr/local/glassfish4/glassfish/domains/domain1/generated
+sudo service glassfish start
+sudo /ur/local/glassfish4/bin/asadmin deploy dataverse-4.9.war
+psql -U dvnapp -d dvndb -f upgrade_v4.8.6_to_v4.9.0.sql
+curl -X PUT -d 'true' http://localhost:8080/api/admin/settings/:ProvCollectionEnabled
+curl http://localhost:8080/api/admin/datasetfield/load -X POST --data-binary @citation.tsv -H "Content-type: text/tab-separated-values"
+sudo service glassfish start
+sudo service glassfish stop
+curl http://localhost:8080/api/admin/index/clear
+curl http://localhost:8080/api/admin/index
+
+2 ravens
+diff /var/www/html/dataexplore/rook/preprocess/preprocess.R /usr/local/glassfish4/glassfish/domains/domain1/applications/dataverse-4.9/WEB-INF/classes/edu/harvard/iq/dataverse/rserve/scripts/preprocess.R
+sudo cp /var/www/html/dataexplore/rook/preprocess/preprocess.R /usr/local/glassfish4/glassfish/domains/domain1/applications/dataverse-4.9/WEB-INF/classes/edu/harvard/iq/dataverse/rserve/scripts/preprocess.R
+cd /usr/local/glassfish4/glassfish/domains/domain1/files/
+sudo rm -f `find . -name '*.prep'`
