@@ -1,3 +1,5 @@
+install.packages(packageurl, repos="https://cloud.r-project.org/",type="source", lib="/usr/lib64/R/library")
+
 packageurl <- "https://cloud.r-project.org/src/contrib/Archive/haven/haven_1.1.2.tar.gz"
 install.packages(packageurl, repos=NULL, type="source", lib="/usr/lib64/R/library")
 
