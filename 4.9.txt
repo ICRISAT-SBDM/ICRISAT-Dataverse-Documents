@@ -1,7 +1,36 @@
-install.packages(packageurl, repos="https://cloud.r-project.org/",type="source", lib="/usr/lib64/R/library")
+1. Uninstall the main R rpm:
+rpm -e --nodeps R-core
 
-packageurl <- "https://cloud.r-project.org/src/contrib/Archive/haven/haven_1.1.2.tar.gz"
-install.packages(packageurl, repos=NULL, type="source", lib="/usr/lib64/R/library")
+2. Delete all the 3rd party packages left behind, in /usr/lib64/R/library Just in case, let's preserve the contents, by renaming the directory:
+
+mv /usr/lib64/R/library /usr/lib64/R/library.PRESERVED
+
+check if you also have any packages in /usr/share/R/library (older versions of R were also using that location).
+If so, similarly delete or preserve its contents.
+
+Re-install R:
+yum install R-core
+
+You now have a new, clean installation of R without any legacy packages built by the previous version(s).
+
+2. Install all the required packages.
+
+Download the following 2 files:
+
+https://demo.dataverse.org/custom/package-versions.txt
+https://demo.dataverse.org/custom/r-setup.sh
+
+Save both in the same directory.
+Run the script r-setup.sh:
+
+chmod +x r-setup.sh
+./r-setup.sh
+
+This script will try to download and build all the packages listed in package-versions.txt. This may take a few hours, to download and compile everything.
+
+
+
+
 
 sudo useradd solr
 sudo mkdir /usr/local/solr
