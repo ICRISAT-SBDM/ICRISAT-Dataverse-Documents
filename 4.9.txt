@@ -9,7 +9,7 @@ check if you also have any packages in /usr/share/R/library (older versions of R
 If so, similarly delete or preserve its contents.
 
 Re-install R:
-yum install R-core
+yum install R-core R-core-devel
 
 You now have a new, clean installation of R without any legacy packages built by the previous version(s).
 
@@ -19,6 +19,7 @@ Download the following 2 files:
 
 https://demo.dataverse.org/custom/package-versions.txt
 https://demo.dataverse.org/custom/r-setup.sh
+CRANREPO="http://cran.r-project.org"; export CRANREPO
 
 Save both in the same directory.
 Run the script r-setup.sh:
@@ -29,7 +30,10 @@ chmod +x r-setup.sh
 This script will try to download and build all the packages listed in package-versions.txt. This may take a few hours, to download and compile everything.
 
 
-
+Two Ravens
+/etc/httpd/conf.d/tworavens-rapache.conf
+/var/www/html/dataexplore directory
+Truncated externalTools table
 
 
 sudo useradd solr
