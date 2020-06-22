@@ -95,3 +95,8 @@ diff /var/www/html/dataexplore/rook/preprocess/preprocess.R /usr/local/glassfish
 sudo cp /var/www/html/dataexplore/rook/preprocess/preprocess.R /usr/local/glassfish4/glassfish/domains/domain1/applications/dataverse-4.9/WEB-INF/classes/edu/harvard/iq/dataverse/rserve/scripts/preprocess.R
 cd /usr/local/glassfish4/glassfish/domains/domain1/files/
 sudo rm -f `find . -name '*.prep'`
+
+
+API
+d0fc34d6-3e27-482e-8197-290ee32d5265
+curl -H "X-Dataverse-key: d0fc34d6-3e27-482e-8197-290ee32d5265" http://localhost:8080/api/admin/authenticatedUsers
