@@ -103,3 +103,13 @@ curl -H "X-Dataverse-key: d0fc34d6-3e27-482e-8197-290ee32d5265" http://localhost
 
 4k@aAvuQg%T*x!?9L!
 dataverseAdmin
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J5G5EGC7V4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-J5G5EGC7V4');
+</script>
